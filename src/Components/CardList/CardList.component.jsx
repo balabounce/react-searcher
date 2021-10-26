@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CardItem from "./Card/Card.component";
@@ -6,11 +6,19 @@ import CardItem from "./Card/Card.component";
 
 const CardList = (props) => {
     const {users, posts} = props;
-    console.log(users, posts);
+    let userI = 0;
+    console.log(posts, users)
     return (
         <Row >
             {posts.map((post,i) => {
-                return <CardItem  user={users[post.userId-1]} post={post} key={i}/>
+                if(i !== 0 && i % 10 === 0) {
+                    userI++;
+                }
+                if(users[userI]) {
+                    return <CardItem  user={users[userI]} post={post} key={i}/>
+                } else {
+                    return null;
+                }
             })}
         </Row>
     )

@@ -11,11 +11,9 @@ const Searcher = (props) => {
             <Container className='d-flex justify-content-center'>
                 <Row >
                     <Col>
-                        <FormControl type="text" placeholder="Search" className="mb-4" style={{width: 700}} onChange={(event) => searchUsers(getSomeUsers(event.target.value))} />
+                        <FormControl type="text" placeholder="Search" className="mb-4" style={{width: 550}} onChange={(event) => searchUsers(event.target.value)} />
                     </Col>
-                    <Col>
-                        <Button variant="outline-success">Search</Button>
-                    </Col>
+               
                 </Row>
             </Container>
         </Form>

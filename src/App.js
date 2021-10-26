@@ -1,10 +1,10 @@
 import './App.css';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CardList from './Components/CardList/CardList.component';
 import Searcher from './Components/Searcher/Searcher.components';
-import { Container, Row } from 'react-bootstrap';
-import { getAllPosts } from './actions/actions';
+import { Container } from 'react-bootstrap';
+import { getAllPosts, getSomeUsers } from './actions/actions';
 
 function App() {
 	const [error, makeError] = ([]);
@@ -13,18 +13,18 @@ function App() {
 	const [posts, setPostsList] = useState([]);
 	const [users, setUsersList] = useState([]);
 
-
-	useEffect(() => {
+	const memoPosts = useMemo(() => {
 		getAllPosts(setPostsList, setUsersList, isPostsLoaded, isUsersLoaded, makeError);
-	  }, []);
+	}, [makeError]) 
 
-	const searchUsers = (userList) => {
-		setUsersList(userList);
+	const searchUsers = (name) => {
+		getSomeUsers(name, setPostsList, setUsersList, isPostsLoaded, isUsersLoaded, makeError);
+		// console.log(users, posts)
 	} 
 
 	if(error) {
 		return <p>Error {error.message}</p>
-	} else if(!postsLoad && !usersLoad) {
+	} else if(!postsLoad || !usersLoad) {
 		return <p>Loading...</p>
 	} else {
 		return (

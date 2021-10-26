@@ -1,5 +1,4 @@
 
-
 export const getAllPosts = (getPosts, getUsers, isPostsLoaded, isUsersLoaded, makeError) => {
     async function fetchData() {
         await fetch('https://jsonplaceholder.typicode.com/posts')
@@ -30,14 +29,15 @@ export const getAllPosts = (getPosts, getUsers, isPostsLoaded, isUsersLoaded, ma
         );	
     }
     fetchData();
+    
 }
 
-export const getSomeUsers = (input) => {
-    const regExp = new RegExp(`${input}[a-z]*`, 'i');
-    const regExp2 = new RegExp(` ${input}[a-z]*`, 'i');
+export const getSomeUsers = (input, setPosts, setUsers, isPostsLoaded, isUsersLoaded, makeError) => {
+    const regExp = new RegExp(`^${input}`, 'ig');
+    const regExp2 = new RegExp(` ${input}`, 'ig');
     const someUsers = [];
 
-    const fetchUser = async () => {
+    async function fetchData() {
         await fetch(`https://jsonplaceholder.typicode.com/users`)
         .then((response) => response.json())
         .then((json) => {
@@ -45,36 +45,18 @@ export const getSomeUsers = (input) => {
                 regExp.test(user.name) || regExp2.test(user.name)
             ))
             json.forEach(user => {
-                console.log(user.id);
                 someUsers.push(user);
             })
-        },
-        (error) => {
-            console.log(error);
-        });	
-    }
-    fetchUser();
-    return someUsers;
-}
-
-export const getSomePosts = (users, getPosts, isPostsLoaded, makeError) =>  {
-    users.forEach(user => {
-        const fetchPost = async () => {
-            await fetch('https://jsonplaceholder.typicode.com/posts')
-            .then((response) => response.json())
-            .then((json) => {
-                isPostsLoaded(true);
-                getPosts(json);
-                // console.log(json);
-            },
-            (error) => {
-                isPostsLoaded(true);
-                makeError(error);
-                // console.log(error);
-            }
-            );	
         }
-        
-    })
-
+        ,
+        (error) => {
+            makeError(error)
+            console.log(error);
+        })
+        .then(() => {
+            setUsers(someUsers);
+        })
+    }
+    fetchData();
 }
+
