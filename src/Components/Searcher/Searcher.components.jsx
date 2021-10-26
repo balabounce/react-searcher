@@ -1,7 +1,6 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Form, FormControl, Button, Row, Container, Col } from 'react-bootstrap';
-import { getSomeUsers } from "../../actions/actions";
+import { Form, FormControl, Row, Container, Col } from 'react-bootstrap';
 
 
 const Searcher = (props) => {

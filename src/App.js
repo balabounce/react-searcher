@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CardList from './Components/CardList/CardList.component';
 import Searcher from './Components/Searcher/Searcher.components';
